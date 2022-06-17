@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq.Expressions;
 using UnityEditor;
 using UnityEngine;
@@ -44,6 +45,19 @@ public static class CorruptedEditorLayout {
         }
 
         return me.Member.Name;
+    }
+
+    public static string GetSaveLocation(UnityEngine.Object o, string message = "Save")
+    {
+        return RelativePath(EditorUtility.SaveFolderPanel(message, Directory.GetCurrentDirectory(), o.GetType().ToString()));
+    }
+
+    public static  string RelativePath(string absolutePath)
+    {
+        string[] split = absolutePath.Split(new string[] { "Assets/" }, StringSplitOptions.RemoveEmptyEntries);
+        string result = "Assets/" + split[split.Length - 1] + "/";
+        Debug.Log("RelativePath returned: " + result);
+        return result;
     }
 
 }
