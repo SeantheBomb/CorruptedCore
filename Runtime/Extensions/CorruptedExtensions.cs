@@ -5,12 +5,18 @@ using UnityEngine;
 namespace Corrupted
 {
 
-    public static class SeanHelperMath
+    public static class CorruptedExtensions
     {
 
         public static Vector3 PercentageAlongAxis(this Vector3 vector, Vector3 axis)
         {
             return axis * (Vector3.Dot(axis.normalized, vector.normalized) * vector.magnitude);
+        }
+
+        public static bool IsGenericList(this object o)
+        {
+            var oType = o.GetType();
+            return oType.IsGenericType && (oType.GetGenericTypeDefinition() == typeof(IEnumerable<>));
         }
 
     }
