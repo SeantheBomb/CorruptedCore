@@ -1,6 +1,6 @@
 {
   "name": "corruptedmedia.corruptedcore",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "displayName": "Corrupted Core",
   "description": "This is the core framework for CorruptedMedia projects",
   "unity": "2018.4",
@@ -17,7 +17,5 @@
     "email": "sean@verticalshift.net",
     "url": "seanthebomb.com"
   },
-  "type": "library",
-  "dependencies": {
-  }
+  "type": "library"
 }
