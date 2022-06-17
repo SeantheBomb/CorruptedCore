@@ -18,5 +18,8 @@
     "email": "sean@verticalshift.net",
     "url": "seanthebomb.com"
   },
-  "type": "library"
+  "type": "library",
+  "dependencies": {
+    "com.dbrizov.naughtyattributes": "2.1.4"
+  }
 }
