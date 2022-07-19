@@ -60,4 +60,27 @@ public static class CorruptedEditorLayout {
         return result;
     }
 
+    public static Dictionary<string, string[]> ReadCSV(string path)
+    {
+        Dictionary<string, string[]> result = new Dictionary<string, string[]>();
+        StreamReader reader = new StreamReader(path);
+        string input = reader.ReadToEnd();
+        string[] rows = input.Split('\n');
+        string[] headers = rows[0].Split(',');
+        foreach (string s in headers)
+        {
+            result.Add(s, new string[rows.Length - 1]);
+        }
+        for (int i = 1; i < rows.Length - 1; i++)
+        {
+            string[] row = rows[i].Split(',');
+            for (int j = 0; j < headers.Length; j++)
+            {
+                result[headers[j]][i] = row[j];
+            }
+        }
+        return result;
+
+    }
+
 }
