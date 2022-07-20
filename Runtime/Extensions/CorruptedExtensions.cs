@@ -19,6 +19,21 @@ namespace Corrupted
             return oType.IsGenericType && (oType.GetGenericTypeDefinition() == typeof(IEnumerable<>));
         }
 
+        public static T[] GetOverlapSphere<T>(this Vector3 pos, float radius) where T : MonoBehaviour
+        {
+            List<T> tList = new List<T>();
+            Collider[] hits = Physics.OverlapSphere(pos, radius);
+            foreach(Collider c in hits)
+            {
+                T t = c.GetComponentInParent<T>();
+                if (t != null)
+                    tList.Add(t);
+            }
+            //if (tList.Count == 0)
+            //    return null;
+            return tList.ToArray();
+        }
+
         public static Vector3 Multiply(this Vector3 a, Vector3 b)
         {
             return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);

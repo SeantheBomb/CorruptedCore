@@ -16,6 +16,14 @@ namespace Corrupted
         private void Start()
         {
             receiver = GetReceiver();
+            foreach (CommandListener l in buttons)
+            {
+                l.command.OnStart(receiver);
+            }
+            foreach (CommandAxisListener l in axes)
+            {
+                l.command.OnStart(receiver);
+            }
         }
 
         private void Update()
@@ -38,11 +46,12 @@ namespace Corrupted
                     l.command.EndExecute(receiver);
 
                 l.command.WhileExecute(receiver, axis);
+                l.lastFrameValue = axis;
             }
         }
 
         [System.Serializable]
-        public struct CommandListener
+        public class CommandListener
         {
             public string name;
             public KeyCode input;
@@ -50,7 +59,7 @@ namespace Corrupted
         }
 
         [System.Serializable]
-        public struct CommandAxisListener
+        public class CommandAxisListener
         {
             public string name;
             public string axis;

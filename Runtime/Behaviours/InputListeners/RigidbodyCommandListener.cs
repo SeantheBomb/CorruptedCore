@@ -31,13 +31,13 @@ namespace Corrupted
         {
             foreach(CommandListener cl in buttons)
             {
-                if (cl.command is IFixedUpdateListener)
-                    (cl.command as IFixedUpdateListener).OnFixedUpdate(receiver);
+                if (cl.command is IFixedUpdateListener<Rigidbody>)
+                    (cl.command as IFixedUpdateListener<Rigidbody>).OnFixedUpdate(receiver);
             }
             foreach(CommandAxisListener cl in axes)
             {
-                if (cl.command is IFixedUpdateListener)
-                    (cl.command as IFixedUpdateListener).OnFixedUpdate(receiver);
+                if (cl.command is IFixedUpdateListener<Rigidbody>)
+                    (cl.command as IFixedUpdateListener<Rigidbody>).OnFixedUpdate(receiver);
             }
         }
     }

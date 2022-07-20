@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Corrupted
 {
-    public interface IFixedUpdateListener
+    public interface IFixedUpdateListener<T>
     {
 
-        public void OnFixedUpdate(Rigidbody rb);
+        public void OnFixedUpdate(T t);
 
     }
 }
