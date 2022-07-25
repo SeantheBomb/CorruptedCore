@@ -34,7 +34,7 @@ namespace Corrupted
 
         private void OnDestroy()
         {
-            OnInstanceDestroyed(Instance);
+            OnInstanceDestroyed?.Invoke(Instance);
             OnDestroyed();
         }
 
