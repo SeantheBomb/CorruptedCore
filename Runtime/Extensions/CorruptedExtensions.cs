@@ -19,10 +19,10 @@ namespace Corrupted
             return oType.IsGenericType && (oType.GetGenericTypeDefinition() == typeof(IEnumerable<>));
         }
 
-        public static T[] GetOverlapSphere<T>(this Vector3 pos, float radius) where T : MonoBehaviour
+        public static T[] GetOverlapSphere<T>(this Vector3 pos, float radius, int layer = ~0) where T : MonoBehaviour
         {
             List<T> tList = new List<T>();
-            Collider[] hits = Physics.OverlapSphere(pos, radius);
+            Collider[] hits = Physics.OverlapSphere(pos, radius, layer);
             foreach(Collider c in hits)
             {
                 T t = c.GetComponentInParent<T>();
@@ -37,6 +37,14 @@ namespace Corrupted
         public static Vector3 Multiply(this Vector3 a, Vector3 b)
         {
             return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
+        }
+
+        public static bool IfHasComponent<T>(this GameObject mb, System.Action<T> action) where T : MonoBehaviour
+        {
+            T t = mb.GetComponent<T>();
+            if (t != null)
+                action?.Invoke(t);
+            return t != null;
         }
 
     }
