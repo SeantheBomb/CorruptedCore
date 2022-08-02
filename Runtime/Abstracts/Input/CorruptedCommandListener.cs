@@ -6,6 +6,11 @@ namespace Corrupted
 {
     public abstract class CorruptedCommandListener<T> : MonoBehaviour
     {
+
+        public System.Action<CorruptedCommand<T>> OnCommandStart, OnCommandEnd, WhileCommand;
+        public System.Action<CorruptedAxisCommand<T>, float> OnCommandAxis;
+
+
         public CommandListener[] buttons;
         public CommandAxisListener[] axes;
 
@@ -31,11 +36,20 @@ namespace Corrupted
             foreach(CommandListener l in buttons)
             {
                 if (Input.GetKeyDown(l.input))
+                {
                     l.command.StartExecute(receiver);
+                    OnCommandStart?.Invoke(l.command);
+                }
                 if (Input.GetKey(l.input))
+                {
                     l.command.WhileExecute(receiver);
+                    WhileCommand?.Invoke(l.command);
+                }
                 if (Input.GetKeyUp(l.input))
+                {
                     l.command.EndExecute(receiver);
+                    OnCommandEnd?.Invoke(l.command);
+                }
             }
             foreach(CommandAxisListener l in axes)
             {
@@ -46,6 +60,7 @@ namespace Corrupted
                     l.command.EndExecute(receiver);
 
                 l.command.WhileExecute(receiver, axis);
+                OnCommandAxis?.Invoke(l.command, axis);
                 l.lastFrameValue = axis;
             }
         }

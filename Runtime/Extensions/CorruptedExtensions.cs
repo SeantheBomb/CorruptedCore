@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,6 +35,64 @@ namespace Corrupted
             return tList.ToArray();
         }
 
+        public static RayHit<T>[] GetSphereCast<T>(this Vector3 pos, Vector3 direction, float radius, float distance = Mathf.Infinity, int layer = ~0) where T : MonoBehaviour
+        {
+            List<RayHit<T>> tList = new List<RayHit<T>>();
+            RaycastHit[] hits = Physics.SphereCastAll(pos, radius, direction, distance, layer);
+            foreach (RaycastHit c in hits)
+            {
+                T t = c.transform.GetComponentInParent<T>();
+                if (t != null)
+                    tList.Add(new RayHit<T>(t, c));
+            }
+            //if (tList.Count == 0)
+            //    return null;
+            return tList.ToArray();
+        }
+
+        public static RayHit<T>[] GetRaycastList<T>(this Vector3 pos, Vector3 direction, float distance = Mathf.Infinity, int layer = ~0) where T : MonoBehaviour
+        {
+            List<RayHit<T>> tList = new List<RayHit<T>>();
+            RaycastHit[] hits = Physics.RaycastAll(pos, direction, distance, layer);
+            foreach (RaycastHit c in hits)
+            {
+                T t = c.transform.GetComponentInParent<T>();
+                if (t != null)
+                    tList.Add(new RayHit<T>(t, c));
+            }
+            //if (tList.Count == 0)
+            //    return null;
+            return tList.ToArray();
+        }
+
+        public static bool IfRaycast(this Vector3 pos, Vector3 direction, float distance, System.Action<RaycastHit> action = null, int layer = ~0)
+        {
+            RaycastHit hit;
+            if(Physics.Raycast(pos, direction, out hit, distance, layer))
+            {
+                action?.Invoke(hit);
+                return true;
+            }
+            return false;
+        }
+
+
+        public static K[] ConvertArray<T,K>(this T[] array, Func<T,K> convert)
+        {
+            K[] newArray = new K[array.Length];
+            for (int i = 0; i < array.Length; i++)
+            {
+                newArray[i] = convert(array[i]);
+            }
+            return newArray;
+        }
+
+        public static T[] GetObjectList<T>(this RayHit<T>[] array)
+        {
+            return array.ConvertArray<RayHit<T>, T>((a) => a);
+        }
+
+
         public static Vector3 Multiply(this Vector3 a, Vector3 b)
         {
             return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
@@ -48,4 +107,32 @@ namespace Corrupted
         }
 
     }
+
+    public class RayHit<T>
+    {
+
+        public T value
+        {
+            get; protected set;
+        }
+        public RaycastHit hit
+        {
+            get; protected set;
+        }
+
+        public Transform transform => hit.transform;
+
+        public RayHit(T value, RaycastHit hit)
+        {
+            this.value = value;
+            this.hit = hit;
+        }
+
+        public static implicit operator T(RayHit<T> value)
+        {
+            return value;
+        }
+
+    }
+
 }
