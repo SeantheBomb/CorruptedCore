@@ -18,7 +18,7 @@ namespace Corrupted
 
         public abstract T GetReceiver();
 
-        private void Start()
+        protected virtual void Start()
         {
             receiver = GetReceiver();
             foreach (CommandListener l in buttons)
@@ -29,12 +29,16 @@ namespace Corrupted
             {
                 l.command.OnStart(receiver);
             }
+            //Can you see this?
         }
 
         private void Update()
         {
-            foreach(CommandListener l in buttons)
+            foreach (CommandListener l in buttons)
             {
+                if (l.isValid == false)
+                    continue;
+
                 if (Input.GetKeyDown(l.input))
                 {
                     l.command.StartExecute(receiver);
@@ -51,8 +55,11 @@ namespace Corrupted
                     OnCommandEnd?.Invoke(l.command);
                 }
             }
-            foreach(CommandAxisListener l in axes)
+            foreach (CommandAxisListener l in axes)
             {
+                if (l.isValid == false)
+                    continue;
+
                 float axis = Input.GetAxis(l.axis);
                 if (axis != 0 && l.lastFrameValue == 0)
                     l.command.StartExecute(receiver);
@@ -65,12 +72,37 @@ namespace Corrupted
             }
         }
 
+        public CommandListener GetCommandListener(CorruptedCommand<T> command)
+        {
+            foreach (CommandListener cl in buttons)
+            {
+                if (cl.command == command)
+                {
+                    return cl;
+                }
+            }
+            return null;
+        }
+
+        public CommandAxisListener GetAxisListener(CorruptedAxisCommand<T> command)
+        {
+            foreach (CommandAxisListener cl in axes)
+            {
+                if (cl.command == command)
+                {
+                    return cl;
+                }
+            }
+            return null;
+        }
+
         [System.Serializable]
         public class CommandListener
         {
             public string name;
             public KeyCode input;
             public CorruptedCommand<T> command;
+            public bool isValid = true;
         }
 
         [System.Serializable]
@@ -80,8 +112,9 @@ namespace Corrupted
             public string axis;
             public CorruptedAxisCommand<T> command;
             [HideInInspector] public float lastFrameValue;
+            public bool isValid = true;
         }
     }
 
-    
+
 }
