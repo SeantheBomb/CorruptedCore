@@ -10,7 +10,7 @@ namespace Corrupted
         public System.Action<CorruptedCommand<T>> OnCommandStart, OnCommandEnd, WhileCommand;
         public System.Action<CorruptedAxisCommand<T>, float> OnCommandAxis;
 
-        public System.Action<CommandListener> OnCommandListenerStart, OnCommandListenerEnd, WhileCommandListener;
+        public static System.Action<T, CommandListener> OnCommandListenerStart, OnCommandListenerEnd, WhileCommandListener;
 
 
 
@@ -48,19 +48,19 @@ namespace Corrupted
                 {
                     l.command.StartExecute(receiver);
                     OnCommandStart?.Invoke(l.command);
-                    OnCommandListenerStart?.Invoke(l);
+                    OnCommandListenerStart?.Invoke(GetReceiver(), l);
                 }
                 if (Input.GetKey(l.input))
                 {
                     l.command.WhileExecute(receiver);
                     WhileCommand?.Invoke(l.command);
-                    WhileCommandListener?.Invoke(l);
+                    WhileCommandListener?.Invoke(GetReceiver(), l);
                 }
                 if (Input.GetKeyUp(l.input))
                 {
                     l.command.EndExecute(receiver);
                     OnCommandEnd?.Invoke(l.command);
-                    OnCommandListenerEnd?.Invoke(l);
+                    OnCommandListenerEnd?.Invoke(GetReceiver(), l);
                 }
             }
             foreach (CommandAxisListener l in axes)
