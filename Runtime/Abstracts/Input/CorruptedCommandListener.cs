@@ -10,6 +10,11 @@ namespace Corrupted
         public System.Action<CorruptedCommand<T>> OnCommandStart, OnCommandEnd, WhileCommand;
         public System.Action<CorruptedAxisCommand<T>, float> OnCommandAxis;
 
+        public System.Action<CommandListener> OnCommandListenerStart, OnCommandListenerEnd, WhileCommandListener;
+
+
+
+
 
         public CommandListener[] buttons;
         public CommandAxisListener[] axes;
@@ -43,16 +48,19 @@ namespace Corrupted
                 {
                     l.command.StartExecute(receiver);
                     OnCommandStart?.Invoke(l.command);
+                    OnCommandListenerStart?.Invoke(l);
                 }
                 if (Input.GetKey(l.input))
                 {
                     l.command.WhileExecute(receiver);
                     WhileCommand?.Invoke(l.command);
+                    WhileCommandListener?.Invoke(l);
                 }
                 if (Input.GetKeyUp(l.input))
                 {
                     l.command.EndExecute(receiver);
                     OnCommandEnd?.Invoke(l.command);
+                    OnCommandListenerEnd?.Invoke(l);
                 }
             }
             foreach (CommandAxisListener l in axes)
@@ -103,6 +111,11 @@ namespace Corrupted
             public KeyCode input;
             public CorruptedCommand<T> command;
             public bool isValid = true;
+
+            public K GetCommand<K>() where K : CorruptedCommand<T>
+            {
+                return command as K;
+            }
         }
 
         [System.Serializable]
