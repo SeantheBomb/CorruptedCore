@@ -12,6 +12,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.dbrizov.naughtyattributes",
+            "expression": "",
+            "define": "NAUGHTY_EXISTS"
+        }
+    ],
     "noEngineReferences": false
 }

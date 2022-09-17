@@ -1,7 +1,10 @@
-using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if NAUGHTY_EXISTS
+using NaughtyAttributes;
+#endif
 
 namespace Corrupted
 {
@@ -18,7 +21,9 @@ namespace Corrupted
         [SerializeField] bool fireOnce = false;
         bool hasFired = false;
 
+#if NAUGHTY_EXISTS
         [Button]
+#endif
         public void Raise()
         {
             if (fireOnce && hasFired)
