@@ -5,6 +5,49 @@ using UnityEngine;
 
 namespace Corrupted
 {
+
+    public abstract class CorruptedBehaviour<K,T> : CorruptedBehaviour where T : CorruptedBehaviour<K,T>
+    {
+
+        static Dictionary<K, T> instances = new Dictionary<K, T>();
+        [Header("Instance Key")]
+        public K instanceKey;
+
+        public override void Start()
+        {
+            base.Start();
+            if (instanceKey != null)
+            {
+                if (instances.ContainsKey(instanceKey))
+                    instances[instanceKey] = this as T;
+                else
+                    instances.Add(instanceKey, this as T);
+                //DynamicObjectIndex.AddGameObject(instanceKey, gameObject);
+            }
+        }
+
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            if (instanceKey != null)
+            {
+                instances.Remove(instanceKey);
+                //DynamicObjectIndex.RemoveGameObject(instanceKey);
+            }
+        }
+
+        public static T GetInstance(K key)
+        {
+            if (instances.ContainsKey(key) == false)
+            {
+                Debug.LogError($"{typeof(T)}: Can not return instance of key \"{ key}\" becuse it does not exist!");
+                return null;
+            }
+            return instances[key];
+        }
+    }
+
     public abstract class CorruptedBehaviour<T> : CorruptedBehaviour where T : CorruptedBehaviour<T>
     {
 
