@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 
 namespace Corrupted
 {
@@ -9,10 +13,16 @@ namespace Corrupted
     public class KeyValue : StringValue
     {
 
-        //private void OnValidate()
-        //{
-        //    Value = name;
-        //}
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (Value != name)
+            {
+                Value = name;
+                EditorUtility.SetDirty(this);
+            }
+        }
+#endif
 
     }
 
