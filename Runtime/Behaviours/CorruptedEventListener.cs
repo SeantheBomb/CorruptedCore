@@ -15,6 +15,8 @@ namespace Corrupted {
         public bool subscribeIfDisabled = false;
         public UnityEvent Response;
 
+        public float delay;
+
         bool subscribed = false;
 
         
@@ -54,6 +56,7 @@ namespace Corrupted {
         IEnumerator OnEventRaisedCR()
         {
             yield return null;
+            if (delay > 0) yield return new WaitForSeconds(delay);
             Response?.Invoke();
         }
 
