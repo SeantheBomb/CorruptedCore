@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#if NAUGHTY_EXISTS
+
 using NaughtyAttributes;
-#endif
+
 
 namespace Corrupted
 {
 
-    [CreateAssetMenu(fileName ="CorruptedEvent", menuName = "Corrupted/Events/Event", order = 0)]
+    [CreateAssetMenu(fileName = "CorruptedEvent", menuName = "Corrupted/Events/Event", order = 0)]
     public class CorruptedEvent : CorruptedModel
     {
         System.Action actionListeners;
@@ -20,15 +20,20 @@ namespace Corrupted
         string desciption;
         [SerializeField] bool fireOnce = false;
         bool hasFired = false;
+        [SerializeField]
+        bool waitForSequence = false;
+        bool isSequenced = false;
 
-#if NAUGHTY_EXISTS
+
         [Button]
-#endif
+
         public void Raise()
         {
+            if (waitForSequence && isSequenced == false)
+                return;//Stop this event from firing until the sequence is ready
             if (fireOnce && hasFired)
                 return;//Stop this event from firing more than designed
-            for (int i = listeners.Count-1; i >= 0; i--)
+            for (int i = listeners.Count - 1; i >= 0; i--)
             {
                 listeners[i]?.OnEventRaised();
             }
@@ -52,7 +57,7 @@ namespace Corrupted
         //IEnumerator RaiseEvent()
         //{
         //    yield return null;
-            
+
         //}
 
         public void RegisterListener(CorruptedEventListener listener)
@@ -73,6 +78,16 @@ namespace Corrupted
         public void UnRegisterListener(System.Action listener)
         {
             actionListeners -= listener;
+        }
+
+        public void StartSequence()
+        {
+            isSequenced = true;
+        }
+
+        public void EndSequence()
+        {
+            isSequenced = false;
         }
     }
 }
