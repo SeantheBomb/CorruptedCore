@@ -11,11 +11,12 @@ namespace Corrupted {
 
         public CorruptedEvent Event;
 
+        public float delay;
+
         public bool nextFrame = true;
         public bool subscribeIfDisabled = false;
         public UnityEvent Response;
 
-        public float delay;
 
         bool subscribed = false;
 

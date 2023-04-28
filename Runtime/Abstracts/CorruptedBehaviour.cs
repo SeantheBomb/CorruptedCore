@@ -9,7 +9,7 @@ namespace Corrupted
     public abstract class CorruptedBehaviour<K,T> : CorruptedBehaviour where T : CorruptedBehaviour<K,T>
     {
 
-        static Dictionary<K, T> instances = new Dictionary<K, T>();
+        protected static Dictionary<K, T> instances = new Dictionary<K, T>();
         [Header("Instance Key")]
         public K instanceKey;
 
