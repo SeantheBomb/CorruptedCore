@@ -30,7 +30,7 @@ namespace Corrupted
 
         public virtual void OnDestroy()
         {
-            if (instanceKey != null)
+            if (instanceKey != null && instances.ContainsKey(instanceKey))
             {
                 instances[instanceKey].Remove(this as T);
                 //DynamicObjectIndex.RemoveGameObject(instanceKey);
