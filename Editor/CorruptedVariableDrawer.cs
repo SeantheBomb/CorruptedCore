@@ -26,7 +26,8 @@ namespace Corrupted
             SerializedProperty useConstant = property.FindPropertyRelative("_useConstant");
             if (useConstant.boolValue)
             {
-                return base.GetPropertyHeight(property, label);
+                SerializedProperty constant = property.FindPropertyRelative("ConstantValue");
+                return EditorGUI.GetPropertyHeight(constant, label, true);
             }
             else
             {
@@ -66,11 +67,13 @@ namespace Corrupted
             int result = EditorGUI.Popup(buttonRect, useConstant.boolValue ? 0 : 1, popupOptions, popupStyle);
 
             useConstant.boolValue = result == 0;
+
+            position.Set(position.xMin + buttonRect.width, position.yMin, position.width - buttonRect.width, position.height);
                 
 
             EditorGUI.PropertyField(position,
                 useConstant.boolValue ? constantValue : variable,
-                GUIContent.none);
+                GUIContent.none, true);
 
             if (EditorGUI.EndChangeCheck())
                 property.serializedObject.ApplyModifiedProperties();
