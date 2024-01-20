@@ -106,6 +106,12 @@ namespace Corrupted
             return t != null;
         }
 
+        public static bool TryGetComponentInParent<T>(this Component mb, out T result) where T : Component
+        {
+            result = mb.GetComponentInParent<T>();
+            return result != null;
+        }
+
     }
 
     public class RayHit<T>
