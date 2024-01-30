@@ -112,6 +112,11 @@ namespace Corrupted
             return result != null;
         }
 
+        public static bool ContainsLayers(this LayerMask group, LayerMask search)
+        {
+            return (group & (1 << search)) != 0;
+        }
+
     }
 
     public class RayHit<T>
