@@ -106,6 +106,17 @@ namespace Corrupted
             return t != null;
         }
 
+        public static bool TryGetComponentInParent<T>(this Component mb, out T result) where T : Component
+        {
+            result = mb.GetComponentInParent<T>();
+            return result != null;
+        }
+
+        public static bool ContainsLayers(this LayerMask group, LayerMask search)
+        {
+            return (group & (1 << search)) != 0;
+        }
+
     }
 
     public class RayHit<T>
