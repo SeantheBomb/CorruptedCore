@@ -29,6 +29,11 @@ public abstract class Service<T> : IService where T : Service<T>, new()
         IsInitialized = true;
     }
 
+    public static T GetService()
+    {
+        return instance;
+    }
+
     ~Service()
     {
         StopService();
