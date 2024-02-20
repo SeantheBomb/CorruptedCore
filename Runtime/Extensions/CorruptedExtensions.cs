@@ -117,6 +117,51 @@ namespace Corrupted
             return (group & (1 << search)) != 0;
         }
 
+        public static T[] GetComponentInList<T>(this Component[] c)
+        {
+            List<T> components = new List<T>();
+            foreach(Component cc in c)
+            {
+                if(cc.TryGetComponent(out T t))
+                {
+                    components.Add(t);
+                }
+            }
+            return components.ToArray();
+        }
+
+        public static K[] GetFromList<T, K>(this T[] t, Func<T, K> func)
+        {
+            List<K> k = new List<K>();
+            foreach(T tt in t)
+            {
+                K kk = func(tt);
+                if (kk != null)
+                    k.Add(kk);
+            }
+            return k.ToArray();
+        }
+
+        //public static float Average(this float[] list)
+        //{
+        //    float total = 0;
+        //    foreach(float i in list)
+        //    {
+        //        total += i;
+        //    }
+        //    return total / list.Length;
+        //}
+
+        //public static float Average(this List<float> list)
+        //{
+        //    float total = 0;
+        //    foreach (float i in list)
+        //    {
+        //        total += i;
+        //    }
+        //    return total / list.Count;
+        //}
+
     }
 
     public class RayHit<T>
