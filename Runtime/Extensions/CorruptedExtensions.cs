@@ -20,6 +20,18 @@ namespace Corrupted
             return oType.IsGenericType && (oType.GetGenericTypeDefinition() == typeof(IEnumerable<>));
         }
 
+        public static T[] GetFromList<T,K>(this K[] input, Func<K,T> func)
+        {
+            List<T> list = new List<T>();
+            foreach(K k in input)
+            {
+                T t = func(k);
+                if (t != null)
+                    list.Add(t);
+            }
+            return list.ToArray();
+        }
+
         public static T[] GetOverlapSphere<T>(this Vector3 pos, float radius, int layer = ~0) where T : MonoBehaviour
         {
             List<T> tList = new List<T>();
