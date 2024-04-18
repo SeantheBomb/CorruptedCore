@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "UIKit", menuName = "Corrupted/UIFactory/Kit")]
-public class UIKit : ScriptableObject
+public abstract class UIKit : ScriptableObject
 {
 
-    public UIView[] prefabs;
+    
+
+    public abstract UIView[] prefabs
+    {
+        get;
+    }
 
     public UIView GetView(UIData data)
     {

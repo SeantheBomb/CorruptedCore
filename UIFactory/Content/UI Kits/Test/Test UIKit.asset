@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07ec43d80c0d2e14792b4cadf56ddacb, type: 3}
-  m_Name: TestUIKit
+  m_Script: {fileID: 11500000, guid: caa99255f87c5ec41be26b26a677d48c, type: 3}
+  m_Name: Test UIKit
   m_EditorClassIdentifier: 
-  prefabs:
-  - {fileID: 4748471290877554164, guid: a008ce59fa5a6b24c974f1cee26d4860, type: 3}
+  _prefabs:
   - {fileID: 5528427432682511267, guid: e335a704c9e44bb429b86d1cc3ab6d07, type: 3}
-  - {fileID: 5529895382062407690, guid: 3661f50ea98816f41991b17e3d33ff2a, type: 3}
-  - {fileID: 1167703382154238291, guid: 21aff2f341b3b4c48b8835b41596be36, type: 3}
   - {fileID: 9008687753780612362, guid: c0b81dbd42368484f81717081a15b296, type: 3}
+  - {fileID: 1167703382154238291, guid: 21aff2f341b3b4c48b8835b41596be36, type: 3}
+  - {fileID: 5529895382062407690, guid: 3661f50ea98816f41991b17e3d33ff2a, type: 3}
+  - {fileID: 4748471290877554164, guid: a008ce59fa5a6b24c974f1cee26d4860, type: 3}
