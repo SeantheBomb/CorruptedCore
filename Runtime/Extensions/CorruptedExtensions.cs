@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Corrupted
 {
@@ -19,6 +20,19 @@ namespace Corrupted
             var oType = o.GetType();
             return oType.IsGenericType && (oType.GetGenericTypeDefinition() == typeof(IEnumerable<>));
         }
+
+        public static T[] GetFromList<T,K>(this K[] input, Func<K,T> func)
+        {
+            List<T> list = new List<T>();
+            foreach(K k in input)
+            {
+                T t = func(k);
+                if (t != null)
+                    list.Add(t);
+            }
+            return list.ToArray();
+        }
+
 
         public static T[] GetOverlapSphere<T>(this Vector3 pos, float radius, int layer = ~0) where T : MonoBehaviour
         {
@@ -130,17 +144,6 @@ namespace Corrupted
             return components.ToArray();
         }
 
-        public static K[] GetFromList<T, K>(this T[] t, Func<T, K> func)
-        {
-            List<K> k = new List<K>();
-            foreach(T tt in t)
-            {
-                K kk = func(tt);
-                if (kk != null)
-                    k.Add(kk);
-            }
-            return k.ToArray();
-        }
 
         //public static float Average(this float[] list)
         //{
@@ -161,6 +164,14 @@ namespace Corrupted
         //    }
         //    return total / list.Count;
         //}
+
+        public static T[] Union<T,K,L>(this K[] l1, L[] l2) where K : T where L : T
+        {
+            T[] tl1 = GetFromList(l1, (k) => (T)k);
+            T[] tl2 = GetFromList(l2, (k) => (T)k);
+
+            return tl1.Union(tl2).ToArray();
+        }
 
     }
 

@@ -4,10 +4,12 @@ using UnityEngine;
 
 namespace Corrupted
 {
-    public abstract class CorruptedModel : ScriptableObject
+    public interface ICoroutineModel
+        
     {
 
 
+        public IEnumerator RunCoroutine(CoroutineRunner runner);
 
     }
 }
