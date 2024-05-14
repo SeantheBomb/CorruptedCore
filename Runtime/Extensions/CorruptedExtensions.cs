@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Corrupted
 {
@@ -31,6 +32,7 @@ namespace Corrupted
             }
             return list.ToArray();
         }
+
 
         public static T[] GetOverlapSphere<T>(this Vector3 pos, float radius, int layer = ~0) where T : MonoBehaviour
         {
@@ -127,6 +129,14 @@ namespace Corrupted
         public static bool ContainsLayers(this LayerMask group, LayerMask search)
         {
             return (group & (1 << search)) != 0;
+        }
+
+        public static T[] Union<T,K,L>(this K[] l1, L[] l2) where K : T where L : T
+        {
+            T[] tl1 = GetFromList(l1, (k) => (T)k);
+            T[] tl2 = GetFromList(l2, (k) => (T)k);
+
+            return tl1.Union(tl2).ToArray();
         }
 
     }
