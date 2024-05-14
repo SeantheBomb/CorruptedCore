@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Corrupted
 {
-    public abstract class CorruptedModel : ScriptableObject
+    public interface IConvert<T>
     {
 
-
+        public K ConvertTo<K>() where K : T;
 
     }
 }

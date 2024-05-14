@@ -1,0 +1,16 @@
+{
+    "name": "CorruptedCore.Test",
+    "rootNamespace": "",
+    "references": [
+        "GUID:769d3430d7acd394fb6e8c2f09747f23"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
