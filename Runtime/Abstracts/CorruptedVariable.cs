@@ -5,27 +5,20 @@ using UnityEngine;
 namespace Corrupted
 {
 
-    public abstract class CorruptedVariable<T> : CorruptedVariable<T, CorruptedValue<T>>
-    {
-        public static implicit operator T(CorruptedVariable<T> value)
-        {
-            return value != null ? value.Value : defaultValue;
-        }
-    }
 
     /// <summary>
     /// Abstract class that stores a reference to either a constant or a Corrupted value, depending on designer's choice
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [System.Serializable]
-    public abstract class CorruptedVariable<T, K> : CorruptedVariable where K : CorruptedValue<T>
+    public abstract class CorruptedVariable<T> : CorruptedVariable
     {
 
         protected static T defaultValue;
 
 
         public T ConstantValue;
-        public K Variable;
+        public CorruptedValue<T> Variable;
         public T Value
         {
             get
@@ -62,7 +55,13 @@ namespace Corrupted
                 _useConstant = value;
             }
         }
-     
+
+
+
+        public static implicit operator T(CorruptedVariable<T> value)
+        {
+            return value != null ? value.Value : defaultValue;
+        }      
         
     }
 
