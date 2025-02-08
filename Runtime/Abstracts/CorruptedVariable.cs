@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,8 @@ namespace Corrupted
 
 
         public T ConstantValue;
+
+        [Expandable]
         public CorruptedValue<T> Variable;
         public T Value
         {
