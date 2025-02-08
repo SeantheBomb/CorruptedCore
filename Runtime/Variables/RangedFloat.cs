@@ -11,6 +11,16 @@ public class RangedFloat
     {
 		return Random.Range(minValue, maxValue);
     }
+
+    public static implicit operator float(RangedFloat value)
+    {
+        return value != null ? value.GetRandom() : 0;
+    }
+
+    public static implicit operator RangedFloat(float value)
+    {
+        return new RangedFloat() { minValue = value, maxValue = value };
+    }
 }
 
 [System.Serializable]

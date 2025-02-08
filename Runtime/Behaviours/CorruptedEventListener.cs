@@ -82,7 +82,7 @@ namespace Corrupted {
             }
         }
 
-        [RuntimeInitializeOnLoadMethod]
+        //[RuntimeInitializeOnLoadMethod]
         static void SubscribeToSceneLoad()
         {
             SceneManager.sceneLoaded += (Scene s, LoadSceneMode lsm) => SubscribeIfDisabled();

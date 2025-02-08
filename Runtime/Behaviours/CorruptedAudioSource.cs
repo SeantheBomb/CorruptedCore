@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace Corrupted
     public class CorruptedAudioSource : CorruptedBehaviour
     {
 
+        [Expandable]
         public CorruptedAudioEvent audioEvent;
 
         AudioSource source;
