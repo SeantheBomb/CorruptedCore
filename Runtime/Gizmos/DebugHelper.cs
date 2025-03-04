@@ -29,7 +29,9 @@ namespace Corrupted
 
         static void DoForXSeconds(Action action, float duration)
         {
+#if UNITY_EDITOR
             Instance.StartCoroutine(DoForXSecondsTask(action, duration));
+#endif
         }
 
 
