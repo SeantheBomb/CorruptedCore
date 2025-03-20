@@ -144,6 +144,12 @@ namespace Corrupted
             return components.ToArray();
         }
 
+        public static float Normalize(this float value, float min, float max, bool clamp = true)
+        {
+            float result =  (value - min) / (max - min);
+            return clamp ? Mathf.Clamp01(result) : result;
+        }
+
 
         //public static float Average(this float[] list)
         //{

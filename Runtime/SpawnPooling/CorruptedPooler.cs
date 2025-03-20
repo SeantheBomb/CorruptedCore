@@ -23,9 +23,16 @@ namespace Corrupted
             activeObjects.Clear();
         }
 
-        public static GameObject Spawn(GameObject prefab, Transform parent)
+        public static GameObject Spawn(GameObject prefab, Transform parent = null)
         {
-            return Spawn(prefab, parent.position, parent.rotation, parent);
+            if (parent == null)
+            {
+                return Spawn(prefab, Vector3.zero, Quaternion.identity, null);
+            }
+            else
+            {
+                return Spawn(prefab, parent.position, parent.rotation, parent);
+            }
         }
 
 
@@ -40,9 +47,16 @@ namespace Corrupted
             return obj;
         }
 
-        public static T Spawn<T>(T prefab, Transform parent) where T : MonoBehaviour, ISpawnPool
+        public static T Spawn<T>(T prefab, Transform parent = null) where T : MonoBehaviour, ISpawnPool
         {
-            return Spawn(prefab, parent.position, parent.rotation, parent);
+            if (parent == null)
+            {
+                return Spawn(prefab, Vector3.zero, Quaternion.identity, null);
+            }
+            else
+            {
+                return Spawn(prefab, parent.position, parent.rotation, parent);
+            }
         }
 
         public static T Spawn<T>(T prefab, Vector3 pos, Quaternion rot, Transform parent = null) where T : MonoBehaviour, ISpawnPool

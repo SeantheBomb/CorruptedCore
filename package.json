@@ -1,6 +1,6 @@
 {
   "name": "corruptedmedia.corruptedcore",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "displayName": "Corrupted Core",
   "description": "This is the core framework for CorruptedMedia projects",
   "unity": "2018.4",
