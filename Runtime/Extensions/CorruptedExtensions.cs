@@ -150,6 +150,40 @@ namespace Corrupted
             return clamp ? Mathf.Clamp01(result) : result;
         }
 
+        /// <summary>
+        /// Calculates a point d on the line segment between b and c such that it is bifurcated by vector a.
+        /// </summary>
+        /// <param name="a">The bifurcation point.</param>
+        /// <param name="b">The first point of the line segment.</param>
+        /// <param name="c">The second point of the line segment.</param>
+        /// <returns>The bifurcated point d on the line segment between b and c.</returns>
+        public static Vector3 Bifurcate(this Vector3 a, Vector3 b, Vector3 c)
+        {
+
+            //Debug.DrawLine(a, b, Color.red, 1f);
+            //Debug.DrawLine(a, c, Color.green, 1f);
+            //Debug.DrawLine(b, c, Color.blue, 1f);
+
+            // Vector from b to c
+            Vector3 bc = c - b;
+
+            // Vector from b to a
+            Vector3 ba = a - b;
+
+            // Project ba onto bc to find the scalar t
+            float t = Vector3.Dot(ba, bc) / Vector3.Dot(bc, bc);
+
+            // Clamp t to ensure d lies on the segment between b and c
+            t = Mathf.Clamp01(t);
+
+            // Calculate the bifurcated point d
+            Vector3 d = b + t * bc;
+
+            //Debug.DrawLine(a, d, Color.yellow, 1f);
+
+            return d;
+        }
+
 
         //public static float Average(this float[] list)
         //{

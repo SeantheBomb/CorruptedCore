@@ -25,8 +25,40 @@ namespace Corrupted
         public static bool RaycastAssisted(Vector3 position, Vector3 ray, float radius, LayerMask layer, out RaycastHit hit)
         {
             var hits = RaycastAllAssisted(position, ray, radius, layer);
-            hit = hits.FirstOrDefault();
+            hit = hits.OrderBy((h) => h.distance).FirstOrDefault();
             return hits.Length > 0;
+        }
+
+        public static int RaycastLinearSweep(Vector3 source, Vector3 ray, Vector3 sweep, int count, out List<RaycastHit> hits, LayerMask layers, bool startOffset = false)
+        {
+            hits = new List<RaycastHit>();
+            int result = 0;
+            for (int i = 0; i < count; i++)
+            {
+                int index = i + (startOffset ? 1 : 0);
+                Ray r = new Ray(source + (sweep * index), ray);
+                if (Physics.Raycast(r, out var hit, ray.magnitude, layers, QueryTriggerInteraction.Ignore))
+                {
+                    if (Vector3.Dot(hit.normal, Vector3.up) > 0)//Obstacle is the floor
+                        continue;
+                    hits.Add(hit);
+                    result++;
+                    //DebugHelper.DrawRay(r.origin, ray, Color.red, 3f);
+                }
+                //else
+                //DebugHelper.DrawRay(r.origin, ray, Color.gray, 3f);
+            }
+            return result;
+        }
+
+        public static Vector3 GetDeltaForce(this Rigidbody rigidbody, Vector3 force, bool forceMagnitude = false)
+        {
+            Vector3 deltaForce = force - rigidbody.linearVelocity;
+
+            if (forceMagnitude)
+                return deltaForce;
+            else
+                return Vector3.Project(deltaForce, force);
         }
     }
 }
