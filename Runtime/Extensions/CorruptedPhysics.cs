@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 namespace Corrupted
 {
@@ -10,12 +11,18 @@ namespace Corrupted
         {
             List<RaycastHit> hits = new List<RaycastHit>();
 
+            float angle = CorruptedMath.GetAngleFromLengthAndWidth(radius, ray.magnitude / 2);
+
             hits.AddRange(Physics.RaycastAll(position, ray, ray.magnitude, layer));
 
             foreach (var hit in Physics.SphereCastAll(position, radius, ray, ray.magnitude, layer))
             {
                 if (hits.Any((h) => h.transform == hit.transform))
                     continue;
+
+                if (Vector3.Angle(ray, (hit.point - position)) > angle)
+                    continue;
+
                 hits.Add(hit);
             }
 
@@ -25,6 +32,14 @@ namespace Corrupted
         public static bool RaycastAssisted(Vector3 position, Vector3 ray, float radius, LayerMask layer, out RaycastHit hit)
         {
             var hits = RaycastAllAssisted(position, ray, radius, layer);
+            hit = hits.OrderBy((h) => h.distance).FirstOrDefault();
+            return hits.Length > 0;
+        }
+
+        public static bool RaycastAssisted(Vector3 position, Vector3 ray, float radius, LayerMask layer, Transform ignoreChildren, out RaycastHit hit)
+        {
+            var hits = RaycastAllAssisted(position, ray, radius, layer);
+            hits = hits.Where((h) => h.transform.IsChildOf(ignoreChildren) == false).ToArray();
             hit = hits.OrderBy((h) => h.distance).FirstOrDefault();
             return hits.Length > 0;
         }
